@@ -68,7 +68,7 @@ input::placeholder,textarea::placeholder{color:#555}
 <main><section class="hero"><div><p class="eyebrow">把目標變成習慣</p><h1>從一個小行動，<br>開始自己的改變。</h1><p class="intro">寫下自己的情境，設計做得到的習慣。<br>以90天願景安排最小行動，再組合屬於你的AI提示詞。</p><a class="primary start" href="#workbook">開始我的練習 <span>↗</span></a><p class="small">陽明交通大學 · 學生學習策略工坊 · 講師 黃博駿</p></div><div class="hero-art" aria-label="個人行動方案的三個步驟"><span class="art-caption">YOUR PERSONAL ACTION PLAN</span><div class="habit-visual"><div class="habit-row"><b>01</b>選定值得改變的習慣</div><div class="habit-row"><b>02</b>設計做得到的小行動</div><div class="habit-row"><b>03</b>帶走自己的行動方案</div></div><div class="art-note">每一步，都貼近自己的生活</div></div></section>
 <section class="how"><div><b>01</b><span>先自己寫下答案</span></div><div><b>02</b><span>複製個人提示詞給 AI</span></div><div><b>03</b><span>判斷建議，再修正行動</span></div></section>
 <div class="privacy"><b>這是你自己的練習空間。</b>填寫時自動儲存在此瀏覽器；只有在最後按下「提交練習給講師」並同意分享後，才會送出這份答案。其他學員看不到你的答案，內容也不會自動傳給 AI。請下載備份，共用裝置使用後記得清除。</div>
-<section class="resume-guide"><h2>保存、回看與繼續練習</h2><p>切換單元不會清除答案。想回看時，點選單元名稱即可修改；同一裝置、同一瀏覽器再開啟這個網址，也會載入已保存內容。4-2日誌可以按日期新增、回看與修改。</p><p>換裝置或瀏覽器前，請先「下載備份」，再在新裝置「匯入備份」。HTML／TXT是閱讀副本，JSON可回到本頁繼續填寫。無痕模式、清除瀏覽資料或按「清除我的答案」可能讓本機紀錄消失，請定期備份。</p></section><div class="workspace" id="workbook"><aside><p class="eyebrow">我的練習路徑</p><nav id="nav" aria-label="練習單元"></nav><div class="progress-card"><span id="progressText">完成 0 / 4 個核心練習</span><progress id="progress" max="4" value="0"></progress><small>有填寫核心欄位即計入進度，<br>不代表已完成習慣養成。</small></div><div class="tools"><button id="export">下載備份</button><label class="file-btn">匯入備份<input type="file" id="import" accept="application/json,.json"></label><button id="download">下載練習文件</button><button id="clear" class="danger">清除我的答案</button></div><p class="save" id="save" role="status">尚未填寫</p></aside><div id="panels"></div></div>
+<section class="resume-guide"><h2>保存、回看與繼續練習</h2><p>切換單元不會清除答案。想回看時，點選單元名稱即可修改；同一裝置、同一瀏覽器再開啟這個網址，也會載入已保存內容。08日誌可以按日期新增、回看與修改。</p><p>換裝置或瀏覽器前，請先「下載備份」，再在新裝置「匯入備份」。HTML／TXT是閱讀副本，JSON可回到本頁繼續填寫。無痕模式、清除瀏覽資料或按「清除我的答案」可能讓本機紀錄消失，請定期備份。</p></section><div class="workspace" id="workbook"><aside><p class="eyebrow">我的練習路徑</p><nav id="nav" aria-label="練習單元"></nav><div class="progress-card"><span id="progressText">完成 0 / 4 個核心練習</span><progress id="progress" max="4" value="0"></progress><small>有填寫核心欄位即計入進度，<br>不代表已完成習慣養成。</small></div><div class="tools"><button id="export">下載備份</button><label class="file-btn">匯入備份<input type="file" id="import" accept="application/json,.json"></label><button id="download">下載練習文件</button><button id="clear" class="danger">清除我的答案</button></div><p class="save" id="save" role="status">尚未填寫</p></aside><div id="panels"></div></div>
 </main><footer>把目標變成習慣 · 黃博駿 AI 高效教練 <span>每一份練習，都從自己的生活開始。</span></footer><div id="toast" role="status" aria-live="polite"></div><script>window.HABIT_COLLECTION = Object.freeze({
   endpoint: '',
   course: 'NYCU-HABIT-TEST',
@@ -76,10 +76,10 @@ input::placeholder,textarea::placeholder{color:#555}
   enabled: false
 });
 </script><script id="course-data">window.HABIT_COURSE={
-  "revision": "NYCU-PPTX-V2-20261110",
+  "revision": "NYCU-PPTX-V050261110",
   "units": [
     {
-      "code": "1-1",
+      "code": "01",
       "title": "認識習慣",
       "pages": "5–11",
       "mode": "read",
@@ -89,7 +89,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "用我的生活例子說明提示、行為與獎賞。若我尚未提供例子，先請我描述，不要假設我的經驗。"
     },
     {
-      "code": "1-2",
+      "code": "02",
       "title": "習慣誤區",
       "pages": "12–24",
       "mode": "class",
@@ -99,7 +99,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "依我有填寫的誤區回答，指出一個可優先調整的環節。原問題與原始答案請分開呈現，不要改寫為我的原話。空白不代表沒有誤區。"
     },
     {
-      "code": "1-3",
+      "code": "03",
       "title": "設立願景",
       "pages": "25–41",
       "mode": "class",
@@ -145,7 +145,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "區分我的願景成果與反覆執行的習慣，依SMART檢查目標。保留我的想法，提供待釐清處；最後依講師原句組合90天願景，不保證一定達成。"
     },
     {
-      "code": "2-1",
+      "code": "04",
       "title": "酵母習慣",
       "pages": "42–51",
       "mode": "class",
@@ -170,7 +170,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "從我的願景拆解行動，檢查最小行動是否簡單、可每天執行。若過大，給兩個更小選項，讓我自己決定。"
     },
     {
-      "code": "2-2",
+      "code": "05",
       "title": "醞釀習慣",
       "pages": "52–59",
       "mode": "class",
@@ -199,10 +199,10 @@ input::placeholder,textarea::placeholder{color:#555}
           false
         ]
       ],
-      "task": "將我在2-1的最小行動列為Basic，和本單元已填的Advanced、Pro整理成BAP方案。未填的版本留白，不強迫補滿3×3；每天完成一項即可，不將高手款變成每日要求。"
+      "task": "將我在04的最小行動列為Basic，和本單元已填的Advanced、Pro整理成BAP方案。未填的版本留白，不強迫補滿3×3；每天完成一項即可，不將高手款變成每日要求。"
     },
     {
-      "code": "2-3",
+      "code": "06",
       "title": "連鎖習慣",
       "pages": "60–68",
       "mode": "class",
@@ -245,10 +245,10 @@ input::placeholder,textarea::placeholder{color:#555}
           false
         ]
       ],
-      "task": "依既有習慣與WWW整理連鎖句，檢查提示是否清楚、行為是否承接2-1的最小行動。用IF…THEN表達；提醒在每15天盤點檢視，不宣稱已替我設定提醒。"
+      "task": "依既有習慣與WWW整理連鎖句，檢查提示是否清楚、行為是否承接04的最小行動。用IF…THEN表達；提醒在每15天盤點檢視，不宣稱已替我設定提醒。"
     },
     {
-      "code": "3-1",
+      "code": "07",
       "title": "善用獎勵",
       "pages": "69–78",
       "mode": "class",
@@ -273,7 +273,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "檢查獎勵能否緊接在習慣完成後，整理我的正向語言與積極動作。避免需要花錢或延遲太久的要求，保留我的選擇。"
     },
     {
-      "code": "4-2",
+      "code": "08",
       "title": "發酵日誌",
       "pages": "79–94",
       "mode": "after",
@@ -333,7 +333,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "依我的日誌整理早晨預見與晚間實際紀錄，分清尚未發生的想像和已發生的成果。沒有實作紀錄就保留空白，提供可複製的每日格式，不編造成就。"
     },
     {
-      "code": "4-3",
+      "code": "09",
       "title": "周期迭代",
       "pages": "95–111",
       "mode": "after",
@@ -386,7 +386,7 @@ input::placeholder,textarea::placeholder{color:#555}
       "task": "依我真實的15天紀錄分析成效與挑戰，先找解法，再評估難易度。選擇下一個15天周期可嘗試的一項調整，分清計畫和已完成成果。沒有紀錄時只協助預備，不冒稱已回顧。"
     },
     {
-      "code": "5-1",
+      "code": "10",
       "title": "展現成就",
       "pages": "112–122",
       "mode": "after",
@@ -481,7 +481,7 @@ const rule='你是我的習慣與目標行動顧問，請用繁體中文。請�
 function unitAnswers(i,blank=false){const u=units[i];let out='';if(i===1){questions.forEach((q,j)=>{const a=values['mis'+j]?.trim();if(a||blank)out+=q[0]+'｜'+q[1]+'\n我的回答：'+(a||'【尚未填寫】')+'\n\n';});if(values.reflection?.trim())out+='我的心得：'+values.reflection+'\n';}for(const f of u.fields){if(f[0]==='nickname')continue;const a=values[f[0]]?.trim();if(a||blank)out+=f[1]+'：'+(a||'【尚未填寫】')+'\n';}return out;}
 function contextText(limit){let out='';for(let i=0;i<=Math.min(limit,final-1);i++){const a=unitAnswers(i);if(a)out+='\n'+units[i].code+' '+units[i].title+'\n'+a;}return out;}
 function prompt(i){return rule+contextText(i===final?final-1:i)+'\n【講師預設任務】\n'+units[i].task;}
-function preview(i){let a=unitAnswers(i);if(i===4&&values.basic)a='沿用2-1的Basic基礎款：'+values.basic+'\n\n'+a;if(i===final)a=contextText(final-1);return a||'先在上方填寫；你的回答會即時出現在這裡。';}
+function preview(i){let a=unitAnswers(i);if(i===4&&values.basic)a='沿用04的Basic基礎款：'+values.basic+'\n\n'+a;if(i===final)a=contextText(final-1);return a||'先在上方填寫；你的回答會即時出現在這裡。';}
 function complete(i){return units[i].fields.filter(f=>f[4]).every(f=>(values[f[0]]||'').trim());}
 function update(){units.forEach((u,i)=>{const o=$('#out'+i);if(o)o.value=prompt(i);const a=$('#answerPreview'+i);if(a)a.textContent=preview(i);});const n=core.filter(complete).length;$('#progress').max=core.length;$('#progress').value=n;$('#progressText').textContent=`完成 ${n} / ${core.length} 個核心練習`;document.querySelectorAll('.nav').forEach((b,i)=>b.classList.toggle('done',core.includes(i)&&complete(i)));const missing=core.flatMap(i=>units[i].fields.filter(f=>f[4]&&!values[f[0]]?.trim()).map(f=>units[i].code+' '+f[1]));$('#missing').textContent=missing.length?'尚未填寫：'+missing.join('、'):'核心練習已填寫。請確認符合自己的需求，再帶給AI。';}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify({version:VERSION,courseRevision:course.revision,values}));$('#save').textContent='已儲存在此瀏覽器 · '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});}catch(e){saveAvailable=false;$('#save').textContent='無法儲存在瀏覽器，請下載備份。';}}
@@ -493,7 +493,7 @@ units.forEach((u,i)=>{const nav=document.createElement('button');nav.type='butto
  if(i===0)p.innerHTML+='<div class="concept-flow"><p><b>提示</b>：什麼信號讓你開始？</p><p><b>行為</b>：你實際做了什麼？</p><p><b>獎賞</b>：完成後得到什麼回饋？</p></div><p>這一單元先理解概念，不新增必填作業。接著可依講師指示，從誤區檢視或願景設定開始。</p>';
  if(i===1)p.innerHTML+=`<p class="hint">依講師指示選擇1–2題，寫下自己的情況即可。</p>`+questions.map((q,j)=>`<div class="question"><label for="mis${j}">${j+1}. ${esc(q[0])}</label><p>${esc(q[1])}</p><textarea id="mis${j}" data-key="mis${j}" maxlength="6000" placeholder="寫下自己的情況（選填）"></textarea></div>`).join('')+field(['reflection','我的心得','area','學習完這單元後，我有一些想法！',false]);
  p.innerHTML+=`<div class="fields">${u.fields.map(field).join('')}</div>`;
- if(i===4)p.innerHTML+='<p class="hint">Basic沿用2-1的最小行動；升級款、高手款可留白，不必把整套方案寫滿。</p>';
+ if(i===4)p.innerHTML+='<p class="hint">Basic沿用04的最小行動；升級款、高手款可留白，不必把整套方案寫滿。</p>';
  if(i===7)p.innerHTML+='<p class="hint">在上方選擇日期，每天新增一筆日誌；選回舊日期即可回看與修改。課堂可先預備，尚未執行的成果可以留白。</p>';
  if(i===8)p.innerHTML+='<div class="review-days">回顧節點：第15、30、45、60、75、90天</div><p class="hint">尚未開始執行時，先規劃回顧日期與方法；不用現在填寫尚未發生的成果。</p>';
  if(i>0){p.innerHTML+=`<div class="prompt-box live-prompt"><h3>我的回答 ＋ 講師預設提示詞</h3><p class="hint">先自行填寫，確認下方內容，再複製到慣用AI。</p><div class="preview-parts"><div><h4>${i===final?'各單元已填寫的內容':'本單元的回答'}</h4><pre id="answerPreview${i}"></pre></div><div><h4>講師預設的AI任務</h4><p>${esc(u.task)}</p></div></div>${i===final?'<p id="missing" class="hint"></p>':''}<label for="out${i}">完整提示詞預覽（唯讀）</label><textarea class="out" id="out${i}" readonly rows="14"></textarea><div class="actions"><button type="button" class="primary copy" data-unit="${i}">複製${i===final?'完整':'這個單元的'}提示詞</button></div><div class="ai-tools"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT ↗</a><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini ↗</a><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude ↗</a></div><p class="hint">開啟工具不會自動傳送答案。請自行貼上、送出，再回本頁記下採用的建議。</p>${i!==final?'<button type="button" class="secondary record-feedback">記下AI回饋與我的選擇</button>':''}</div>`;}
