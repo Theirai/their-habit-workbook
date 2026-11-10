@@ -488,7 +488,7 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify({version:VERSION,
 units.forEach((u,i)=>{const nav=document.createElement('button');nav.type='button';nav.className='nav';nav.innerHTML=`<span class="n">${esc(u.code)}</span>${esc(u.title)}`;nav.addEventListener('click',()=>show(i));$('#nav').append(nav);
  const p=document.createElement('section');p.className='panel';p.id=i===final?'panel-final':'panel-'+i;p.hidden=i!==0;
  const phase={read:'課堂概念',class:'課堂練習',after:'課後延伸 · 可先預備',final:'整合與帶走'}[u.mode];
- p.innerHTML=`<div class="panel-top"><span class="pill">${esc(phase)}</span><span class="time">${u.pages?'V2 簡報 '+esc(u.pages)+' 頁':'V2 同步版'}</span></div><h2>${esc(u.code)} ${esc(u.title)}</h2><p class="lead">${esc(u.intro)}</p>`;
+ p.innerHTML=`<div class="panel-top"><span class="pill">${esc(phase)}</span></div><h2>${esc(u.code)} ${esc(u.title)}</h2><p class="lead">${esc(u.intro)}</p>`;
  if(u.source)p.innerHTML+=`<div class="original"><b>課程引導</b><p>${esc(u.source)}</p></div>`;
  if(i===0)p.innerHTML+='<div class="concept-flow"><p><b>提示</b>：什麼信號讓你開始？</p><p><b>行為</b>：你實際做了什麼？</p><p><b>獎賞</b>：完成後得到什麼回饋？</p></div><p>這一單元先理解概念，不新增必填作業。接著可依講師指示，從誤區檢視或願景設定開始。</p>';
  if(i===1)p.innerHTML+=`<p class="hint">依講師指示選擇1–2題，寫下自己的情況即可。</p>`+questions.map((q,j)=>`<div class="question"><label for="mis${j}">${j+1}. ${esc(q[0])}</label><p>${esc(q[1])}</p><textarea id="mis${j}" data-key="mis${j}" maxlength="6000" placeholder="寫下自己的情況（選填）"></textarea></div>`).join('')+field(['reflection','我的心得','area','學習完這單元後，我有一些想法！',false]);
