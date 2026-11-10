@@ -107,20 +107,6 @@ input::placeholder,textarea::placeholder{color:#555}
           false
         ],
         [
-          "context",
-          "我的身分與生活情境",
-          "area",
-          "例如：大二、住宿，每週三天社團。",
-          false
-        ],
-        [
-          "topic",
-          "擬定內容主題 | 想達成什麼事情",
-          "area",
-          "例如：學習韓文。",
-          true
-        ],
-        [
           "habit",
           "我想培養的習慣",
           "area",
@@ -479,11 +465,11 @@ input::placeholder,textarea::placeholder{color:#555}
     }
   ]
 };
-window.HABIT_QUESTIONS=[['模糊不明確的目標','想培養的新習慣是否有明確具體目標？'],['初期設立過高目標','目標是否現實可行？會過於困難？'],['全依賴意志力','培養習慣過程，你是否只意志力維持？'],['缺乏持續動機','培養習慣過程中，你是否有哪些支持？'],['忽略環境的影響','你的周邊環境是否有益你養成習慣？'],['沒定期檢視習慣','你是否曾定期檢查和調整自身習慣？'],['沒運用獎賞機制','在完成新習慣後，你是否會設定獎勵？']];
+window.HABIT_QUESTIONS=[["模糊不明確的目標","想培養的新習慣是否有明確具體目標？"],["初期設立過高目標","目標是否現實可行？會過於困難？"],["全依賴意志力","培養習慣過程，你是否只意志力維持？"],["缺乏持續動機","培養習慣過程中，你是否有哪些支持？"],["忽略環境的影響","你的周邊環境是否有益你養成習慣？"],["沒定期檢視習慣","你是否曾定期檢查和調整自身習慣？"],["沒運用獎賞機制","在完成新習慣後，你是否會設定獎勵？"]];
 </script><script>(()=>{'use strict';
 const course=window.HABIT_COURSE,units=course.units,questions=window.HABIT_QUESTIONS,KEY='nycu-habit-workbook-v1',VERSION=1;
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const legacy=['nickname','context','habit','reason','current','vision','reflection','action','basic','advanced','pro','done','anchor','where','environment','reward','support','obstacle','backup','restart','tracking','review','aiFeedback','finalPlan'];
+const legacy=['nickname','context','topic','habit','reason','current','vision','reflection','action','basic','advanced','pro','done','anchor','where','environment','reward','support','obstacle','backup','restart','tracking','review','aiFeedback','finalPlan'];
 const known=new Set([...legacy,...units.flatMap(u=>u.fields.map(f=>f[0])),...questions.map((q,j)=>'mis'+j)]);
 function clean(data){const result={};for(const [k,v] of Object.entries(data||{}))if(known.has(k)&&typeof v==='string')result[k]=v.slice(0,30000);return result;}
 let values={},current=0,timer,saveAvailable=true;try{values=clean(JSON.parse(localStorage.getItem(KEY)||'{}').values)}catch(e){}
@@ -519,7 +505,7 @@ function hydrate(){document.querySelectorAll('[data-key]').forEach(e=>e.value=va
 document.querySelectorAll('[data-key]').forEach(e=>e.addEventListener('input',()=>{values[e.dataset.key]=e.value;persist();update();}));
 document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{const out=$('#out'+b.dataset.unit);try{await navigator.clipboard.writeText(out.value);say('已複製。請貼到你慣用的AI。');}catch(e){out.focus();out.select();say('已選取提示詞，請按Ctrl/Cmd+C複製。');}}));
 function download(name,text,type){const url=URL.createObjectURL(new Blob(['\ufeff',text],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
-function documentText(){let out='# 把目標變成習慣｜我的個人練習\n教材版本：'+course.revision+'\n稱呼：'+(values.nickname||'未填寫')+'\n學員代號：'+($('#learnerId')?.value||'未填寫')+'\n匯出時間：'+new Date().toLocaleString('zh-TW')+'\n\n'+contextText(final-1)+'\n【AI回饋與我的選擇】\n'+unitAnswers(final,true)+'\n【完整提示詞】\n'+prompt(final)+(window.HABIT_JOURNAL?.text()||'');const visible=new Set(units.flatMap(u=>u.fields.map(f=>f[0])).concat(questions.map((q,j)=>'mis'+j),'reflection'));const prior=Object.entries(values).filter(([k,v])=>!visible.has(k)&&v.trim());if(prior.length)out+='\n\n【舊版已填紀錄保留，非本次必填作業】\n'+prior.map(([k,v])=>k+'：'+v).join('\n');return out;}
+function documentText(){let out='# 把目標變成習慣｜我的個人練習\n教材版本：'+course.revision+'\n稱呼：'+(values.nickname||'未填寫')+'\n學員代號：'+($('#learnerId')?.value||'未填寫')+'\n匯出時間：'+new Date().toLocaleString('zh-TW')+'\n\n'+contextText(final-1)+'\n【AI回饋與我的選擇】\n'+unitAnswers(final,true)+'\n【完整提示詞】\n'+prompt(final)+(window.HABIT_JOURNAL?.text()||'');const visible=new Set(units.flatMap(u=>u.fields.map(f=>f[0])).concat(questions.map((q,j)=>'mis'+j),'reflection'));const prior=Object.entries(values).filter(([k,v])=>!visible.has(k)&&!['context','topic'].includes(k)&&v.trim());if(prior.length)out+='\n\n【舊版已填紀錄保留，非本次必填作業】\n'+prior.map(([k,v])=>k+'：'+v).join('\n');return out;}
 function take(){download('我的習慣練習_V2.txt',documentText(),'text/plain;charset=utf-8');say('已下載練習文件。');}
 $('#download').addEventListener('click',take);$('#takeaway').addEventListener('click',take);
 $('#export').addEventListener('click',()=>download('我的習慣練習_V2備份.json',JSON.stringify({version:VERSION,courseRevision:course.revision,exportedAt:new Date().toISOString(),values,journalEntries:window.HABIT_JOURNAL?.entries()||{}},null,2),'application/json;charset=utf-8'));$('#downloadBackup').addEventListener('click',()=>$('#export').click());
