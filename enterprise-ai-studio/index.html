@@ -135,15 +135,59 @@ return{fields,markup,refresh,prompt,summary};})();
 
 </script>
 <script>
+/* Stage 04: aligned to the instructor's actual slides 44–52. */
 window.GoalPlanner=(()=>{'use strict';
 const $=id=>document.getElementById(id);
-const fields=[['funnelQuestion','這位客戶現在可能在問什麼？','可從03的人物誌挑一個疑問，例如不了解用途、比較規格，或想確認如何詢價。'],['funnelEvidence','判斷的線索（選填）','可記實際紀錄；若只是依人物誌推想，寫本次假設即可。'],['funnel','這次先協助哪個階段？','先選一個主要方向；也可以請AI提出候選再決定。'],['goalCandidates','AI建議的目標候選（選填）','貼回AI對階段、主要目標、文案、圖像與下一步的建議。'],['communicationGoal','我選定的主要溝通目標','看完後，希望對方知道什麼、能比較什麼，或完成什麼行動？'],['goalCopyDirection','文案先說什麼？','例如回答一個入門問題、解釋規格差異，或說明詢價需要提供的資料。'],['goalImageDirection','圖像要幫忙看懂什麼？','例如產品與場景、尺寸比較、使用步驟或方案摘要。這裡先規劃，不直接生成圖。'],['nextAction','希望對方採取的下一步','查看說明、比較規格、索樣、詢問、報名或購買；不必每次都下單。'],['goalMetric','可以觀察什麼？（選填）','例如查看說明、提出具體問題或完成詢價。按讚不等於理解，詢價不等於成交。'],['goalLimits','還需要補的資料（選填）','沒有依據的效果、認證、價格、庫存或交期，先保留待補。']];
-const rows=[['認識','還不了解品牌、產品或用途','入門說明、使用情境','看懂這是什麼、可用在哪裡'],['比較','正在判斷是否適合自己','選購指南、規格比較、FAQ','理解差異與適用條件'],['行動','需要資訊以完成下一步','方案摘要、詢價流程、報名資訊','詢問、索樣、報名或購買']];
+const fields=[
+['funnel','這次先協助哪個階段？','可先選認識、比較或行動；還不確定就保留原選項，請AI協助發想。'],
+['funnelEvidence','我這樣判斷的理由','可以先記一個想法或觀察。例如：他已知道器材用途，現在想比較重量與尺寸。還不確定也可留白。'],
+['goalCopyDirection','文案要說清楚什麼？','例如：介紹用途、說明規格差異，或交代詢問前需要準備的資訊。'],
+['goalImageDirection','圖像要幫忙看懂什麼？','例如：使用情境、同尺度規格對照，或清楚的詢問步驟。這裡先寫方向。'],
+['nextAction','看完後，希望對方接著做什麼？','例如：查看用途說明、比較完整規格，或依用途與數量提出詢問。'],
+['communicationGoal','我採用的主要溝通目標','用一句話說明，這份圖文先幫對方理解什麼或完成哪一步。'],
+['goalLimits','需要搭配的補充資料（選填）','例如：用途說明、費用與供應資訊。先記需要哪些資料，未提供的不要自行補造。']
+];
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function field([k,t,h]){return '<label class="field" for="'+k+'">'+t+'<small>'+h+'</small>'+(k==='funnel'?'<select id="funnel"><option value="">還不確定，先請AI協助</option><option>認識</option><option>比較</option><option>行動</option><option>購後使用／維護</option></select>':'<textarea id="'+k+'" rows="3" maxlength="300000" placeholder="先寫想法，也可以請AI協助提出候選。"></textarea>')+'</label>';}
-function markup(){return '<h2>04 決定本次溝通目標</h2><p class="lead">03讓我們了解對象；04再決定這份文案與圖像，要先幫他認識、比較，還是完成下一步。</p><section class="goal-context"><h3>沿用03的客戶與相關角色</h3><details><summary>查看已採用的人物誌與內容方向</summary><pre id="goalAudience"></pre></details><button data-stage="3">回03補充</button></section><section class="guide"><h3>行銷漏斗是什麼？</h3><p>用階段整理潛在客戶從認識品牌、考慮選項到採取行動的過程，協助規劃每個階段需要的內容與下一步。</p><p>本課簡化為「認識、比較、行動」。完整版本也可能包含忠誠與購後經營；各版本並不完全相同，客戶也可能返回比較或跳過某些階段。</p></section><div class="goal-funnel" aria-label="行銷漏斗三階段">'+rows.map((r,i)=>'<div class="goal-level"><strong>'+r[0]+'</strong><div><b>'+r[1]+'</b><p>內容：'+r[2]+'<br>目標：'+r[3]+'</p></div></div>').join('')+'</div><details class="example"><summary>看一個例子：同一項產品，三種圖文任務</summary><p>認識：用情境圖與用途說明，讓讀者知道它可以做什麼。比較：用規格對照與挑選文案，幫助讀者理解差異。行動：用詢價資訊或方案摘要，讓讀者知道如何往下聯繫。是否適合，仍要回到產品資料與本次客戶情境。</p></details><h3>先選一個問題，再決定這次的目標</h3>'+fields.map(field).join('')+'<section class="goal-card"><h3>我的本次溝通目標卡</h3><pre id="goalPreview"></pre></section><section class="ai-box"><h3>請AI判斷階段，提供文案與圖像方向</h3><p>先比較最多3個目標候選；由你選定後，AI再更新目標卡。這裡先確定方向，下一階段才挑選特色與效益。</p><label class="field" for="stagePrompt4">可複製的完整提示詞<textarea id="stagePrompt4" readonly rows="12"></textarea></label><button class="primary" data-copy-prompt="4">複製04完整提示詞</button><div class="actions ai-links"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT ↗</a><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini ↗</a><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude ↗</a></div><small>不會自動傳送資料或附件；請自行貼上、送出，再帶回採用內容。</small></section><details class="review"><summary>AI回覆與我的選擇</summary><label class="field">AI原始回覆<textarea id="ai4" rows="5"></textarea></label><label class="field">我的採用與修改理由<textarea id="decision4" rows="5"></textarea></label></details><details class="example"><summary>方法來源與使用界線</summary><p>參考<a href="https://advertising.amazon.com/en-gb/library/guides/marketing-funnel" target="_blank" rel="noopener noreferrer">Amazon Ads：Marketing Funnel</a>的認識、考慮、轉換與忠誠架構；本課以認識、比較、行動做操作性簡化。不是把所有接觸都當購買。</p><p><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-consumer-decision-journey" target="_blank" rel="noopener noreferrer">McKinsey決策旅程</a>提醒決策可能循環與回頭；購後使用／維護另依需求安排。</p></details><div class="actions"><button data-stage="3">← 回03了解受眾</button><button class="primary" data-stage="5">前往05：整理特色與效益 →</button></div>';}
-function summary(v){return fields.filter(([k])=>k!=='goalCandidates').map(([k,t])=>t+'：'+(v[k]||'未提供')).join('\n');}
-function prompt(v){return ['【角色與任務】','請擔任我的圖文內容企劃助理，使用自然、精準的繁體中文。這一步只決定溝通目標與文案／圖像方向，不立即生成成品。','','【沿用02產品／服務／活動資料】',v.adopted||v.materials||'未提供','產品限制與待補：'+(v.pending||'未提供'),'本次用途：'+(v.format||'未提供'),'','【沿用03受眾與相關角色】',window.AudiencePlanner.summary(v),'','【我的04初想】',summary(v),'目標候選：'+(v.goalCandidates||'尚未提出'),'','【請分輪協作】','1. 根據人物誌的需要與疑問，判斷本次適合協助認識、比較或行動。列出判斷線索與假設；不把虛擬人物誌當成真實購買意願證據。若主要是購後使用／維護，另列此任務，不硬套成再次購買。','2. 最多提出3個可選目標，每個列階段、主要讀者、要回答的問題、看完希望發生的改變、文案方向、圖像需說清楚的資訊、合適下一步、可觀察線索與所缺資料。','3. 不把「製作一張圖」或「聖誕節」當成目標。內容形式、題材與平台要和希望讀者理解或採取的行動分開。','4. 每輪最多問3個問題，等我回答與選定一個主要目標後，再整理目標卡。若我已選定，先檢查連貫性，再指出一個最重要缺口，不重新擅改方向。','5. 考慮03選定的相關角色，可以另附規格表或方案摘要，不把所有人的資訊塞在同一張圖。行動不限下單，也可查看、索樣、詢問、預約或報名。','6. 最後列出接到05 FAB應優先找哪類產品資料，還不要擅自承諾產品效益。','','【共同界線】','行銷漏斗是規劃框架，階段沒有統一版本，客戶可能回頭或跳階段。沒有實際數據不生成轉換率或客群人數。','不捏造效果、認證、價格、庫存、交期、客戶引言或研究結果。已知、假設與待補分開；網站沒有自動傳送附件，需要時請我另附。','補充要求：'+(v.extraRequest||'未指定')].join('\n');}
+function field(k){const [,t,h]=fields.find(f=>f[0]===k);return '<label class="field" for="'+k+'">'+t+'<small>'+h+'</small>'+(k==='funnel'?'<select id="funnel"><option value="">還不確定，先請AI協助</option><option>認識</option><option>比較</option><option>行動</option></select>':'<textarea id="'+k+'" rows="3" maxlength="300000" placeholder="先寫自己的想法，再請AI補充；討論後可回來修改。"></textarea>')+'</label>';}
+const rows=[['認識','讓他知道這是什麼','用途、品牌與使用情境。'],['比較','幫他判斷是否適合','差異、依據與適用限制。'],['行動','讓他知道如何往下做','詢問、索樣、報名或購買。']];
+function markup(){return '<h2>04 決定本次溝通目標</h2><p class="lead">沿用03選定的客戶，想一想：這份文案與圖像，這次先幫他完成什麼？</p><details class="goal-context"><summary>查看03已採用的客戶資料</summary><pre id="goalAudience"></pre><button data-stage="3">回03補充</button></details><section class="guide"><h3>用行銷漏斗，整理這次的圖文任務</h3><p>依客戶所處階段，安排內容與下一步。本課簡化為「認識、比較、行動」，不代表每個人都照固定順序前進。</p></section><div class="goal-funnel" aria-label="行銷漏斗三階段">'+rows.map(r=>'<div class="goal-level"><strong>'+r[0]+'</strong><div><b>'+r[1]+'</b><p>'+r[2]+'</p></div></div>').join('')+'</div><p class="guide"><strong>先分清楚：</strong>「做一張圖卡」是形式，「聖誕節活動」是題材；還要說明希望讀者看懂什麼或接著做什麼。</p><h3>先寫初判，再請AI補充</h3><p>沿用自己的產品、服務或活動。依下方三個問題，先記下已有的想法。不用每格都填完；還不確定的部分，可以請AI根據前面的資料協助發想。</p><details class="example"><summary>還不確定目標？可以先想這幾個問題（選用）</summary><ul><li>這位客戶現在可能最想知道什麼？</li><li>看完這份圖文後，希望他比原本更清楚哪件事？</li><li>他還缺哪些資訊，才有辦法繼續了解、比較或提出詢問？</li><li>如果這份圖文只先說清楚一件事，你會選什麼？</li></ul><p>想到的內容可記在下方的初判理由；也可以直接請AI根據02、03資料協助發想，不用逐題作答。</p></details><section><h3>1．先協助認識、比較，還是採取行動？</h3>'+field('funnel')+field('funnelEvidence')+'</section><section><h3>2．文案與圖像分別要說清楚什麼？</h3>'+field('goalCopyDirection')+field('goalImageDirection')+'</section><section><h3>3．看完後，哪個下一步最合理？</h3>'+field('nextAction')+'</section><details class="example"><summary>參考範例：教室窗口想比較器材規格</summary><p><strong>初判與理由：</strong>先協助比較。對方已知道器材用途，現在想了解不同規格如何比較。</p><p><strong>主要目標：</strong>讓教室窗口看懂可比較的選項。<br><strong>文案：</strong>說明規格差異與需要確認的條件。<br><strong>圖像：</strong>整理同尺度的規格對照。<br><strong>補充資料：</strong>用途說明、費用與供應資訊。<br><strong>下一步：</strong>依確認後的用途與數量提出詢問。</p><small>對照簡報P.51～52；此為教學假設，實際內容須依正式資料安排。</small></details><section class="ai-box"><h3>請AI根據我的初判，補充可選的方向</h3><p>複製提示詞到慣用AI，先比較建議，再選一個主要目標。文案與圖像的方向仍可回到上方修改。</p><label class="field" for="stagePrompt4">可複製的完整提示詞<textarea id="stagePrompt4" readonly rows="12"></textarea></label><button class="primary" data-copy-prompt="4">複製04完整提示詞</button><div class="actions ai-links"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT ↗</a><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini ↗</a><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude ↗</a></div><small>不會自動傳送資料或附件；請自行貼上、送出，再帶回採用內容。</small></section><details class="example"><summary>AI提出候選後，可以這樣繼續討論</summary><p>還不知道怎麼選：<br>「請比較這幾個目標各自能幫客戶看懂什麼，並根據我的資料說明選擇理由，讓我再決定。」</p><p>目標太廣：<br>「請把這個目標縮小成一份圖文可以說清楚的一件事。」</p><p>已選一個方向：<br>「我想先採用比較的方向。請依我選定的客戶，整理一個主要目標，以及文案、圖像和下一步。」</p></details><h3>討論後，留下這次採用的目標</h3>'+field('communicationGoal')+'<details class="example"><summary>需要搭配補充資料時，再填這裡（選填）</summary>'+field('goalLimits')+'</details><section class="goal-card"><h3>我這次採用的溝通方向</h3><pre id="goalPreview"></pre></section><details class="review"><summary>保留AI回覆與我的選擇（選填）</summary><label class="field">AI原始回覆<textarea id="ai4" rows="5"></textarea></label><label class="field">我採用或修改的原因<textarea id="decision4" rows="5"></textarea></label></details><details class="example"><summary>對應簡報與方法說明</summary><p>依本課正式簡報P.44～52設計：判斷階段、分清形式與目標、安排文案與圖像方向，再選合理的下一步。本頁練習只涵蓋這段簡報的內容。</p><p>行銷漏斗參考<a href="https://advertising.amazon.com/en-gb/library/guides/marketing-funnel" target="_blank" rel="noopener noreferrer">Amazon Ads：Marketing Funnel</a>。本課用認識、比較、行動做教學簡化；完整版本可能包含忠誠與購後經營，這裡不另設填寫題目。</p></details><div class="actions"><button data-stage="3">← 回03了解客戶</button><button class="primary" data-stage="5">前往05 →</button></div>';}
+function summary(v){return [['funnel','本次階段'],['funnelEvidence','初判理由'],['communicationGoal','採用的主要目標'],['goalCopyDirection','文案方向'],['goalImageDirection','圖像方向'],['nextAction','下一步'],['goalLimits','搭配的補充資料']].map(([k,t])=>t+'：'+(v[k]||'尚未填寫')).join('\n');}
+function prompt(v){return [
+'【這次要一起完成的事】',
+'請擔任我的圖文內容企劃助理，使用精準、易懂的繁體中文。依我提供的客戶資料與初判，協助決定本次溝通目標，以及文案、圖像與下一步的方向。現在先做方向判斷，不生成完整文案或圖片。',
+'',
+'【本課使用的行銷漏斗】',
+'認識：讓對方知道這是什麼，說明用途、品牌與使用情境。',
+'比較：幫對方判斷是否適合，說明差異、依據與適用限制。',
+'行動：讓對方知道如何往下做，例如詢問、索樣、報名或購買；不必每次都要求下單。',
+'這是本課的三階段簡化，用來規劃內容，不代表所有客戶都照固定順序前進。',
+'',
+'【02已整理的產品／服務／活動資料】',v.adopted||v.materials||'尚未提供',
+'原有用途或形式：'+(v.format||'尚未提供'),
+'已知限制與待補：'+(v.pending||'未另列'),
+'',
+'【03已採用的客戶資料】',window.AudiencePlanner.summary(v),
+'',
+'【我對04三個問題的回答】',
+'1. 這次的初判階段：'+(v.funnel||'尚未決定'),
+'初判理由：'+(v.funnelEvidence||'尚未填寫'),
+'2. 文案要說清楚：'+(v.goalCopyDirection||'尚未填寫'),
+'圖像要幫忙看懂：'+(v.goalImageDirection||'尚未填寫'),
+'3. 希望對方的下一步：'+(v.nextAction||'尚未填寫'),
+'討論後已採用的主要目標：'+(v.communicationGoal||'尚未選定'),
+'需要搭配的補充資料：'+(v.goalLimits||'未另列'),
+'',
+'【請依序和我協作】',
+'1. 先沿用02資料與03客戶，簡述你理解的本次情境。若我有初判與理由，說明是否符合客戶當下的需要；若我留白或不確定，直接根據已提供資料協助發想，不要求我先把目標想好。不要把人物誌假設直接當成真實購買意願，也不要為了改寫而否定原本合理的方向。',
+'2. 如我還沒選定目標，最多補充3個候選。每個用精簡表格列出「階段、主要溝通目標、文案方向、圖像方向、合理下一步」並簡述理由，讓我比較後選一個。只有缺少會改變方向的關鍵資訊時，先問最多3個重要問題，等我回答後再繼續。可用來引導我思考的問題包括：客戶現在可能最想知道什麼？看完希望他更清楚哪件事？他還缺什麼資訊才能往下做？不必每輪都問完。',
+'3. 不把「做一張圖卡」或活動名稱直接當成溝通目標。目標要說清楚：讀者看完後，能理解什麼、判斷什麼，或完成哪一步。',
+'4. 提出候選後先停下，請我選擇或補充。若我仍不確定，先比較候選各自能解決的問題及選擇理由；若目標太廣，協助縮成一份圖文能說清楚的一件事。等我選定後，整理一份簡短的溝通方向：主要目標、文案重點、圖像重點與下一步；必要時另列需搭配的補充資料。若我已選定，直接依此檢查與修訂，不擅自重選。',
+'',
+'【本階段的範圍】',
+'請將回覆限制在以上三個問題與採用的溝通方向，不另加練習項目或後續任務。',
+'依已提供的資料描述；沒有資料的規格、效果、費用與供應條件，不要補造。推測的地方清楚標記。',
+'本網頁不會自動傳送附件；需要未提供的資料時，請明確告訴我要補什麼。'
+].join('\n');}
 function refresh(v){$('goalAudience').textContent=window.AudiencePlanner.summary(v);$('goalPreview').textContent=summary(v);$('stagePrompt4').value=prompt(v);}
 return{fields,markup,prompt,refresh,summary};})();
 
