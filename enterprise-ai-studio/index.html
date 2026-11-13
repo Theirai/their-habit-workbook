@@ -49,6 +49,33 @@
 
 .aida-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.aida-cards>div{background:white;border:1px solid #dcd7ff;border-radius:12px;padding:18px}.aida-cards strong{color:#6254d9}.aida-cards p{margin:8px 0 0}@media(max-width:650px){.aida-cards{grid-template-columns:1fr}}
 
+
+
+/* Responsive QA 2026-11-13: prevent intrinsic content from stretching the FAB panel. */
+.workspace>*{min-width:0}
+.panel{min-width:0;max-width:100%}
+.panel-top{gap:12px;flex-wrap:wrap}
+.panel-top>*{min-width:0;overflow-wrap:anywhere}
+.panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.panel textarea,.panel input,.panel select{max-width:100%;min-width:0}
+@media(max-width:700px){
+ .tools button,.tools .file,.actions button,.actions a,.ai-links a,#mapNav button,.scene-tools button{min-height:44px}
+ .ai-links{display:flex;flex-wrap:wrap;gap:8px}
+ .ai-links a{display:inline-flex;align-items:center}
+ .workspace aside{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+ .workspace aside .step{min-width:0;width:100%;margin:0}
+ .workspace aside .step small{font-size:12px;line-height:1.65}
+ .field textarea,.panel input:not([type=checkbox]):not([type=radio]),.panel select,
+ #promptOutput,.ai-box textarea{font-size:16px}
+ .actions>*{max-width:100%;white-space:normal}
+ #mapScene canvas{touch-action:pan-y}
+}
+@media(max-width:360px){
+ .workspace aside{grid-template-columns:1fr}
+ .results-card,.answer-overview{padding:14px}
+ .panel{padding:20px 14px}
+}
+
 </style><link rel="icon" type="image/png" sizes="32x32" href="https://enterprise-ai-visual-workbook-20261110.tmr-x-their-9753.chatgpt.site/brand-official-32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://enterprise-ai-visual-workbook-20261110.tmr-x-their-9753.chatgpt.site/brand-official-16.png"></head><body>
 <header><a class="brand" href="index.html"><img src="https://enterprise-ai-visual-workbook-20261110.tmr-x-their-9753.chatgpt.site/brand.png" alt="臺灣高效能創新研究" style="width:285px;max-width:100%;height:auto"></a><div class="tools"><span id="saveState" role="status">草稿保存在此瀏覽器</span><button id="backup">下載備份</button><label class="file">匯入備份<input id="restore" type="file" accept=".json"></label><button id="print">列印 / 存成 PDF</button></div></header>
 <main><section class="intro"><p class="eyebrow">讓靈感成形，讓創作更有效率</p><h1>讓好產品與好服務，<em>用圖文展現價值。</em></h1><p>點選小島，前往對應的練習頁面。</p></section>
