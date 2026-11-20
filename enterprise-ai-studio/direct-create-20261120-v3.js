@@ -90,7 +90,7 @@ document.documentElement.dataset.courseVersion='2026-11-20-direct-v3';
 /* Learner-facing labels omit slide-page citations; source metadata and answers remain intact. */
 (()=>{
 const studio=window.CourseStudio;if(!studio)return;
-const clean=s=>String(s).replace(/主教材\s*\d+\s*頁[、，]\s*標題教材\s*\d+\s*頁[。]?/g,'練習與參考已依課程內容整理。').replace(/(?:主教材|標題教材|原簡報|正式簡報|教材|簡報)\s*(?:第\s*|[Pp][.．]\s*)?\d+(?:\s*[、,，至到–—~～-]\s*\d+)*\s*頁?\s*(?:示意)?/g,'').replace(/^[\s｜|·、，]+|[\s｜|·、，]+$/g,'');
+const clean=s=>String(s).replace(/依正式簡報\s*[Pp][.．]\s*\d+(?:\s*[、,，至到–—~～-]\s*\d+)*\s*頁?/g,'依課程內容').replace(/主教材\s*\d+\s*頁[、，]\s*標題教材\s*\d+\s*頁[。]?/g,'練習與參考已依課程內容整理。').replace(/(?:主教材|標題教材|原簡報|正式簡報|教材|簡報)\s*(?:第\s*|[Pp][.．]\s*)?\d+(?:\s*[、,，至到–—~～-]\s*\d+)*\s*頁?\s*(?:示意)?/g,'').replace(/^[\s｜|·、，]+|[\s｜|·、，]+$/g,'');
 function update(){
 for(const track of ['copy','image']){
  const root=document.getElementById('cs-'+track);if(!root)continue;
