@@ -86,3 +86,28 @@ const v=api.get();for(const track of ['copy','image']){const k='lessonActive'+tr
 window.CreativePlanner.refresh(api.get(),api.context());studio.refresh(api.get());window.WorkshopResults.refresh();
 document.documentElement.dataset.courseVersion='2026-11-20-direct-v3';
 })();
+
+/* Learner-facing labels omit slide-page citations; source metadata and answers remain intact. */
+(()=>{
+const studio=window.CourseStudio;if(!studio)return;
+const clean=s=>String(s).replace(/主教材\s*\d+\s*頁[、，]\s*標題教材\s*\d+\s*頁[。]?/g,'練習與參考已依課程內容整理。').replace(/(?:主教材|標題教材|原簡報|正式簡報|教材|簡報)\s*(?:第\s*|[Pp][.．]\s*)?\d+(?:\s*[、,，至到–—~～-]\s*\d+)*\s*頁?\s*(?:示意)?/g,'').replace(/^[\s｜|·、，]+|[\s｜|·、，]+$/g,'');
+function update(){
+for(const track of ['copy','image']){
+ const root=document.getElementById('cs-'+track);if(!root)continue;
+ const select=document.getElementById('cs-task-'+track);
+ for(const o of select.options){const e=studio.data.exercises.find(e=>e.id===o.value);if(e)o.textContent=e.title;}
+ const source=root.querySelector('#cs-body-'+track+' > .cs-source');if(source)source.textContent=track==='image'?'本次練習｜直接生成圖像':'本次練習｜文案創作';
+ root.querySelectorAll('summary,h4,small,p').forEach(el=>{
+ if(el.children.length||el.closest('.direct-custom')||el.closest('label')||el.closest('.cs-output'))return;
+ const before=el.textContent;
+ if(/^原簡報第\s*\d+頁示意$/.test(before.trim())){el.remove();return;}
+ if(/^第\s*\d+(?:[、，]\s*\d+)*\s*頁$/.test(before.trim())){el.textContent='教材原文';return;}
+ const after=clean(before);if(after!==before)el.textContent=after;
+ });
+}
+document.querySelectorAll('#stage1 .example p,#stage2 .example p,#stage3 .example p,#stage4 .example p,#stage5 .example p,#stage6 .example p').forEach(el=>{if(!el.children.length)el.textContent=clean(el.textContent);});
+}
+const refresh=studio.refresh;studio.refresh=function(v){refresh(v);update();};
+const exports=studio.exportPrompts;studio.exportPrompts=function(v){return exports(v).map(p=>({...p,stage:clean(p.stage).replace(/（\s*）/g,'')}));};
+update();window.WorkshopResults.refresh();document.documentElement.dataset.slidePageLabels='hidden';
+})();
